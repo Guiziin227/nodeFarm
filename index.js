@@ -2,6 +2,9 @@ const fs = require('fs')
 const url = require('url')
 const http = require('http')
 const path = require('path')
+
+const slugify = require('slugify')
+
 const replaceTemplate = require('./modules.js/replaceTemplate')
 
 // const textIn = fs.readFileSync('./txt/input.txt', 'utf-8')
@@ -32,6 +35,11 @@ const tempProduct = fs.readFileSync(`${__dirname}/templates/template-product.htm
 
 const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, 'utf-8')
  const dataObj = JSON.parse(data)
+
+const slugs = dataObj.map((valor) => {
+    return slugify(valor.productName, { lower: true } )
+})
+console.log(slugs)
 
 const server = http.createServer((req, res) => {
 
@@ -71,5 +79,5 @@ const server = http.createServer((req, res) => {
 })
 
 server.listen(8000,'192.168.0.13',() => {
-    console.log('Funcionando')
+    console.log('Funcionando!')
 })
